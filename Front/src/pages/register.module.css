@@ -1,0 +1,44 @@
+input[type=tel]::-webkit-inner-spin-button,
+    input[type=tel]::-webkit-outer-spin-button {
+      -webkit-appearance: none; /* Oculta las flechas */
+
+   
+    
+    }
+
+form div{
+  display: flex;
+  
+}
+
+h1{
+  color: #7F7F7F;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+
+
+}
+.separador{
+  max-width: 50%;
+  min-height: 1rem;
+  background-color: #ffe5ec;
+}
+
+.erroresFormulario {
+  color: rgb(218, 93, 93);
+  font-size: 50%;
+  align-self: center;
+}
+button {
+  border: none;
+  color: #595959;
+  background-color: #FFC2D1;
+  border-radius: 20%;
+  cursor: pointer;
+  text-decoration: none;
+  max-width: 10%;
+
+}

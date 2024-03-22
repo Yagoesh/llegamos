@@ -7,7 +7,6 @@
 }
 
 
-
 .header{
   background-color: rgb(255, 229, 236);
   text-align: center;
@@ -16,7 +15,7 @@
   flex-direction: column;
   position: relative;
   max-height: 35%;
-
+  
 }
 .title1 {
   font-weight: 800;
@@ -26,11 +25,11 @@
 }
 
 .title2 {
-position: absolute;
-left: 1%;
-top: 0;
-font-size: 1.2rem;
-color: #7F7F7F;
+  position: absolute;
+  left: 1%;
+  top: 0;
+  font-size: 1.2rem;
+  color: #7F7F7F;
 }
 .buttons{
   display: flex;
@@ -51,4 +50,11 @@ a{
 a:hover {
   color: #F2F2F2;
   background-color: #FF8FAB ;
+}
+.icono {
+  position: absolute;
+  max-width: 2rem;
+  max-height: 2rem;
+  left: -20%;
+  top: 8%;
 }
