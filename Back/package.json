@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "initDb": "node src/db/initDb.js",
-    "dev": "node src/server.js"
+    "initDb": "nodemon src/db/initDb.js",
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",

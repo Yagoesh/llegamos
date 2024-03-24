@@ -8,12 +8,43 @@ function Register() {
   const {register , handleSubmit , formState, watch} = useForm({
     mode:"onTouched"
   })
+
+  function getCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+  
+    // Formatear el día y mes con ceros al principio si son menores que 10
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+  
+    return `${day}-${month}-${year}`;
+  }
+  
+  function isDateValid(date) {
+    const today = new Date();
+    const selectedDate = new Date(date);
+    const diff = today.getTime() - selectedDate.getTime();
+    const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25)); 
+    
+  return age >= 18;
+}
+
+
+
   function onSubmit (data) {
     console.log(data)
+    console.log(data.dob)
+
     // hacer un fetch/axios y ver si la promesava bien 
     // vaciar los inputs
   }
   const {errors } = formState
+
+
+
+
   // page de estamos esperando a que des click al link en tu correo
   // finalmente mensaje de Bienvenid@
   // navigate a Login
@@ -52,6 +83,15 @@ function Register() {
         type="text" placeholder="Surname..."
         />
         <p className={styles.erroresFormulario}>{errors.surname?.message}</p>
+      </div>
+
+      <div>
+        Date of birth: 
+        <input type="date" name="dob" defaultValue="" max={getCurrentDate()} {...register("dob" , {
+          required: 'date of birth required',
+          validate: value => isDateValid(value) || 'Underage not allowed'
+        })} />
+        <p className={styles.erroresFormulario}>{errors.dob?.message}</p>
       </div>
 
       <div className={styles.separador}></div>

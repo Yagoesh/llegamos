@@ -45,6 +45,6 @@ sendQuery(`CREATE TABLE IF NOT EXISTS llegamos.users (
   )`)
 
 
-
+module.exports=sendQuery
 
 
