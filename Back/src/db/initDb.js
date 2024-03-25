@@ -19,30 +19,22 @@ async function createPool () {
     console.error(error.message)
   }
 }
+
+
+
 async function sendQuery (query , values) {
   try {
     const pool = await createPool()
-    const [data] = await pool.query(query , [values])
+    const [data] = await pool.query(query , values)
 
     return data
     
   } catch (error) {
-    console.error("👎" )
+    console.log("❌")
+    console.error(error.message )
   }
 }
 
-
-
-
-  sendQuery(`DROP TABLE IF EXISTS llegamos.users`)
-sendQuery(`CREATE TABLE IF NOT EXISTS llegamos.users (
-  id INT AUTO_INCREMENT PRIMARY KEY, 
-  name VARCHAR(50), 
-  surname VARCHAR(50),
-  email VARCHAR(255),
-  dob DATE,
-  password VARCHAR(50)
-  )`)
 
 
 module.exports=sendQuery

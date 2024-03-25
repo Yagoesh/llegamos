@@ -1,43 +1,55 @@
 const express = require('express');
 const sendQuery = require('../db/initDb.js');
 const userSchema  = require('../schemas/userSchema.js');
+const {formatearFecha , calculateAge } = require('../helpers/dobHelpers.js');
+const sendEmail = require('../helpers/sendEmail.js');
 const userRouter = express.Router();
 
-userRouter.post("/register" , (req,res,next) => {
+userRouter.post("/register" , async (req,res,next) => {
   // en back ...
 
 const result = userSchema.safeParse(req.body)
+if (!result.data) {
+  return res.status(500).send("no se ha completado el body")
+}
 
-  
+// creamos un regCode 
+
+const regCode = crypto.randomUUID()
+
+
 
 // DOB
-function calculateAge(birthDate) {
-  const today = new Date();
-  const birth = new Date(birthDate);
-  let age = today.getFullYear() - birth.getFullYear();
-  const monthDiff = today.getMonth() - birth.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-    age--;
-  }
-  return age;
-}
+
 const age = calculateAge(req.body.dob)
 if (age < 18) {
   return res.send("menor de edad ")
 }
+const fechaFormateada = formatearFecha(result.data.dob)
 
-res.send(result)
+// comprobar si existe el usuario ya
 
-// sendQuery(`
-// INSERT INTO users (name , surname , dob , email , mobile , password) VALUES (? , ? ,? ,? , ?)
-// `, [name , surname , dob , email , mobile , password ])
-  
-  
-  // si no existe , hacemos un insert ... values
-  // mandamos por nodemailer un correo y esperamos la confirmacion
-  // una vez hecha la confirmacion se crea el token con : id , name , email , age, sex
+const [user] = await  sendQuery(`SELECT * FROM users WHERE email = ?` , [result.data.email])
 
-  
-   })
+
+if(user){
+  return res.status(500).send("ya existe el usuario")
+}
+// si no existe , hacemos un insert ... values
+await sendQuery(`
+INSERT INTO users ( name , surname, dob, email, mobile, password, regCod)
+VALUES ( ?, ?, ?, ?, ?, ? , ? )
+`, [result.data.name, result.data.surname, fechaFormateada, result.data.email, result.data.mobile, result.data.password , regCode]);
+
+// mandamos por nodemailer el regCode y esperamos la confirmacion
+await sendEmail(result.data.email , "Verifica para registrarte" , `
+<h1>Bienvenidos a Seguros Llegamos</h1> 
+<p>gracias por registrarte, para verificar solo falta un ultimo paso haz click en el siguiente <a href="http://localhost:3000/user/register/:${regCode}">link</a></p>
+`)
+
+
+
+res.send("registered")
+})
 
 module.exports = userRouter
