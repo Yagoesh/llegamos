@@ -4,12 +4,16 @@ const app = express()
 const cors = require('cors');
 const {PORT} = require("../env");
 const { errorsControler } = require("./controlers/errorsControler.js");
-
+const cookieParser = require("cookie-parser")
 const userRouter = require('./routes/userRoutes.js');
 
+app.use(cookieParser())
+app.use(cors({
+  origin: "http:/localhost:5173",
+  exposedHeaders:["Authorization"],
+  credentials:true
+}))
 app.use(express.json())
-app.use(cors())
-
 
 
 app.use("/user" , userRouter)

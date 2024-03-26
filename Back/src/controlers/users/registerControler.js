@@ -2,14 +2,16 @@ const sendQuery = require('../../db/initDb.js');
 const userSchema  = require('../../schemas/userSchema.js');
 const {formatearFecha , calculateAge } = require('../../helpers/dobHelpers.js');
 const sendEmail = require('../../helpers/sendEmail.js');
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
 async function registerControler (req,res,next) {
   // en back ...
+  const result = userSchema.safeParse(req.body)
 
-const result = userSchema.safeParse(req.body)
+
 if (!result.data) {
-  return res.status(500).send("no se ha completado el body")
+  console.error(result.error.issues)
+  return res.status(500).send(result.error.issues)
 }
 
 // creamos un regCode 
@@ -45,9 +47,10 @@ VALUES ( ?, ?, ?, ?, ?, ? , ? )
 // mandamos por nodemailer el regCode y esperamos la confirmacion
 await sendEmail(result.data.email , "Verifica para registrarte" , `
 <h1>Bienvenidos a Seguros Llegamos</h1> 
-<p>gracias por registrarte, para verificar solo falta un ultimo paso haz click en el siguiente <a href="http://localhost:3000/user/register/:${regCode}">link</a></p>
+<p>gracias por registrarte, para verificar solo falta un ultimo paso haz click en el siguiente botón </p>
+<a href="http://localhost:5173/user/register/${regCode}">link</a>
 `)
-res.send("registered")
+res.status(200).send("registered")
 }
 
 module.exports = registerControler

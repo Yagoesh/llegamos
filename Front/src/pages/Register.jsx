@@ -1,11 +1,13 @@
 import styles from "./register.module.css"
 import {useForm} from "react-hook-form"
-
+import axios from "axios"
+import { convertDOB } from "../helper/dobHelper";
+import { Outlet } from "react-router-dom";
 
 function Register() {
   // aqui ...
   // inputs de name, surname, email , tel-numb , age , sex , password , repeat 
-  const {register , handleSubmit , formState, watch} = useForm({
+  const {register , handleSubmit , formState, watch } = useForm({
     mode:"onTouched"
   })
 
@@ -31,30 +33,43 @@ function Register() {
   return age >= 18;
 }
 
+let registered = true
 
-
-  function onSubmit (data) {
+async function onSubmit (data, event) {
+  event.preventDefault()
+  const {name , surname , DOB , email , mobile , password} = data
+  
+  const dob = convertDOB(DOB)
+  
+  const dataToSend = {name , surname , dob , email , mobile , password}
+ 
+  axios.post("http://localhost:3000/user/register" , dataToSend )
+  .then(data => {
     console.log(data)
-    console.log(data.dob)
+    registered = true
+  })
+    .catch(error => console.log(error.message))
+    
 
-    // hacer un fetch/axios y ver si la promesava bien 
-    // vaciar los inputs
+  
+    // reset()
   }
+  
+  
   const {errors } = formState
-
-
-
-
+  
+  
+  
+  
   // page de estamos esperando a que des click al link en tu correo
   // finalmente mensaje de Bienvenid@
   // navigate a Login
   
   
   // en back ...
-  // si no existe , hacemos un insert ... values
-  // mandamos por nodemailer un correo y esperamos la confirmacion
-  // una vez hecha la confirmacion se crea el token con : id , name , email , age, sex
 
+  // una vez hecha la confirmacion se crea el token con : id , name , email , age, sex
+  
   return(
     <>
     <h1>Register</h1>
@@ -64,9 +79,9 @@ function Register() {
       <div>
         <input name="name"
           {...register ("name" ,
-            {required:"required",
-              minLength:{ value:3 , message:"minimum 3 characters"} ,
-              maxLength:{value: 20 , message:"maximum 20 characters"}}
+          {required:"required",
+          minLength:{ value:3 , message:"minimum 3 characters"} ,
+          maxLength:{value: 20 , message:"maximum 20 characters"}}
           )}
           type="text" placeholder="Name..."
         />
@@ -87,11 +102,11 @@ function Register() {
 
       <div>
         Date of birth: 
-        <input type="date" name="dob" defaultValue="" max={getCurrentDate()} {...register("dob" , {
+        <input type="date" name="DOB" defaultValue="" max={getCurrentDate()} {...register("DOB" , {
           required: 'date of birth required',
           validate: value => isDateValid(value) || 'Underage not allowed'
         })} />
-        <p className={styles.erroresFormulario}>{errors.dob?.message}</p>
+        <p className={styles.erroresFormulario}>{errors.DOB?.message}</p>
       </div>
 
       <div className={styles.separador}></div>
@@ -101,7 +116,7 @@ function Register() {
         {...register ("email",
         {required:"required",
         minLength:{ value:3 , message:"minimum 3 characters"} ,
-        maxLength:{value: 20 , message:"maximum 20 characters"}}
+        maxLength:{value: 100 , message:"maximum 20 characters"}}
         )}
         type="text" placeholder="Email..."
         />
@@ -153,6 +168,7 @@ function Register() {
 
       <button>Register</button>
     </form>
+    { registered  ? < Outlet /> : <p>revisa datos </p>}
     </>
   )
 }

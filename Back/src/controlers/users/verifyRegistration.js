@@ -12,8 +12,6 @@ SET verified = "yes"
 WHERE regCode = ?
 ` , [regCode])
 
-
-
 res.send(user)
 }
 

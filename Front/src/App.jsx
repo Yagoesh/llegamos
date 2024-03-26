@@ -8,6 +8,8 @@ import { Perfil } from './pages/Perfil'
 import {Routes , Route} from "react-router-dom"
 import { Register } from './pages/Register'
 import { Login } from './pages/Login'
+import { RegisterWelcome } from './pages/RegisterWelcome'
+
 
 function App() {
 
@@ -18,7 +20,13 @@ function App() {
      <Routes>
     
      <Route path="/login" element={< Login/>}/>
-     <Route path="/register" element={< Register/>}/>
+
+     <Route path="/register" element={< Register/>}>
+      < Route path="/register/:regCode" element={< RegisterWelcome />}/>
+     </Route>
+      
+
+
       <Route path="/misSeguros" element={< MisSeguros/>}/>
       <Route path="/Payments" element={< Payments/>}/>
       <Route path="/calculate" element={< Calculate/>}/>
