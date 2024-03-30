@@ -40,12 +40,14 @@ if(!passwordMatched) {
 }
 // crear token
 const infoUser = {
+  userId: user.userId,
   name: user.name,
   surname: user.surname,
   email: user.email
 }
-console.log(SECRET)
+
 const token = jwt.sign(infoUser, SECRET)
+
 const coockieConfig = {
   maxAge: 172800000 , 
   httpOnly: true

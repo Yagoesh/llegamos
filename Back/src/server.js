@@ -6,6 +6,7 @@ const {PORT} = require("../env");
 const { errorsControler } = require("./controlers/errorsControler.js");
 const cookieParser = require("cookie-parser")
 const userRouter = require('./routes/userRoutes.js');
+const insuranceRouter = require("./routes/insuranceRoutes.js")
 
 app.use(cookieParser())
 app.use(cors({
@@ -17,6 +18,7 @@ app.use(express.json())
 
 
 app.use("/user" , userRouter)
+app.use("/insurance" , insuranceRouter)
 
 
 app.use((req, res , next) => {
