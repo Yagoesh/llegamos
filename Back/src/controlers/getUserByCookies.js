@@ -16,6 +16,7 @@ function getUserByCookies (req , res , next) {
   if(!user) {
     return res.status(500).send("need to be logged in for this request")
   }
+ 
   req.user = user
   next()
 }

@@ -1,10 +1,11 @@
 const express = require("express")
-require("express-async-errors")
 const app = express()
 const cors = require('cors');
+const cookieParser = require("cookie-parser")
+require("express-async-errors")
+
 const {PORT} = require("../env");
 const { errorsControler } = require("./controlers/errorsControler.js");
-const cookieParser = require("cookie-parser")
 const userRouter = require('./routes/userRoutes.js');
 const insuranceRouter = require("./routes/insuranceRoutes.js")
 
