@@ -7,7 +7,8 @@ require("express-async-errors")
 const {PORT} = require("../env");
 const { errorsControler } = require("./controlers/errorsControler.js");
 const userRouter = require('./routes/userRoutes.js');
-const insuranceRouter = require("./routes/insuranceRoutes.js")
+const insuranceRouter = require("./routes/insuranceRoutes.js");
+const calculateRouter = require("./routes/calculateRoutes.js");
 
 app.use(cookieParser())
 app.use(cors({
@@ -20,6 +21,8 @@ app.use(express.json())
 
 app.use("/user" , userRouter)
 app.use("/insurance" , insuranceRouter)
+app.use("/calculate" , calculateRouter)
+
 
 
 app.use((req, res , next) => {

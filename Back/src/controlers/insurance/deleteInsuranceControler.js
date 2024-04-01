@@ -1,4 +1,3 @@
-// const sendQuery = require("../../db/initDb")
 
 const sendQuery = require("../../db/initDb")
 
@@ -17,10 +16,6 @@ async function deleteInsuranceControler (req , res , next) {
   // delete 
   await sendQuery(`DELETE FROM insurance WHERE insuranceId = ?`, [insuranceId])
 
-
-  // crear en la bd columna de 
-  //  1) fecha de fin de contrato al año de haber empezado 
-  //  2) cantidad de renovaciones 
   
 
   res.status(200).send("insurance deleted")
