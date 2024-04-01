@@ -68,7 +68,7 @@ async function onSubmit (data, event) {
   
   // en back ...
 
-  // una vez hecha la confirmacion se crea el token con : id , name , email , age, sex
+  
   
   return(
     <>

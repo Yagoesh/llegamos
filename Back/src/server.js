@@ -11,11 +11,13 @@ const insuranceRouter = require("./routes/insuranceRoutes.js");
 const calculateRouter = require("./routes/calculateRoutes.js");
 
 app.use(cookieParser())
-app.use(cors({
-  origin: "http:/localhost:5173",
+app.use(cors(
+  {
+    origin: 'http://localhost:5173',
   exposedHeaders:["Authorization"],
-  credentials:true
-}))
+  credentials: true
+}
+))
 app.use(express.json())
 
 

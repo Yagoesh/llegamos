@@ -12,6 +12,7 @@ async function loginControler (req , res , next) {
   if(!email || !password) {
     return res.status(500).send("missing email and/or password")
   }
+
   
   const [user] = await sendQuery(`
     SELECT * FROM users WHERE email = ?
@@ -24,7 +25,7 @@ async function loginControler (req , res , next) {
     `, [email])
   
   if (verified.verified === "no") {
-  return res.send("you have to verify your account first")
+  return res.status(403).send("you have to verify your account first")
   }
 
   // comprobamos si existe usuario con correo electrionico

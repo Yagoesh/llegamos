@@ -9,7 +9,7 @@ const { deleteUserControler } = require('../controlers/users/deleteUserControler
 
 userRouter.post("/register" , registerControler) 
 userRouter.get("/register/:regCode" , verifyRegistration)
-userRouter.get("/login", loginControler)
+userRouter.post("/login", loginControler)
 userRouter.delete("/delete/:email", deleteUserControler)
 
 

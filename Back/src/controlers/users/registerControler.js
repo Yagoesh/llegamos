@@ -1,6 +1,6 @@
 const sendQuery = require('../../db/initDb.js');
 const userSchema  = require('../../schemas/userSchema.js');
-const {formatearFecha , calculateAge } = require('../../helpers/dobHelpers.js');
+const {formatearFecha , calculateAge } = require('../../helpers/dateHelpers.js');
 const sendEmail = require('../../helpers/sendEmail.js');
 const bcrypt = require("bcrypt");
 

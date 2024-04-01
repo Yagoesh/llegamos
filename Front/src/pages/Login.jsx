@@ -1,26 +1,76 @@
 import styles from "./register.module.css"
+import {useForm} from "react-hook-form"
+import axios from "axios"
+import { useState } from "react"
+
 
 function Login () {
-  // inputs email password
-  // comprobamos si existe usuario con correo electrionico
-  // cmprobamos si la contraseña coincide
-  // comprobar que el verified = "yes"
-  // meter token en Ls
-  // navigate a mis seguros o Mis presupuestos 
 
+  const {register , handleSubmit , formState } = useForm({
+    mode:"onTouched"
+  })
+  const [errorMessage, setErrorMessage] = useState('')
+  const [loged, setloged] = useState('')
+
+  async function onLogin (data, event) {
+    event.preventDefault()
+    axios.post("http://localhost:3000/user/login" , data , {withCredentials:true})
+    .then(resp => {
+      console.log(resp)
+      setloged(true)
+    })
+    .catch(error => {
+      if (error.response) {
+        setErrorMessage(error.response.data.error);
+      } else {
+        
+        console.error('Error al enviar la solicitud:', error.message);
+      }
+      console.error(error.message)
+    })
+      
+  }
+  
+  // navigate a mis seguros o Mis presupuestos 
+  const {errors } = formState
 
   return(
 
-    <>
+  <>
     <h1>Login</h1>
 
-    <input type="text" placeholder="Email..." />
+    <form onSubmit={handleSubmit(onLogin)}>
+      <div>
+        <input name="email"
+          {...register ("email",
+            {required:"required",
+              minLength:{ value:3 , message:"minimum 3 characters"} ,
+              maxLength:{value: 100 , message:"maximum 20 characters"}}
+          )}
+        type="text" placeholder="Email..."
+        />
+        <p className={styles.erroresFormulario}>{errors.email?.message}</p>
+      </div>
+      <div>
+        <input name="password"
+          {...register ("password",
+          {required:"required",
+          minLength:{ value:3 , message:"Your password must have at least 3 characters"} ,
+          maxLength:{value: 10 , message:"Your password must have a maximum of 10 characters"}}
+          )}
+          type="password" placeholder="Password..."
+          />
+        <p className={styles.erroresFormulario}>{errors.password?.message}</p>
+      </div>
+      
+      
+      <div className={styles.separador}></div>
+      <button>Login</button>
+    </form>
+          {errorMessage && <p>{errorMessage}</p>}
+          {loged && <p>You logged in !!</p>}
 
-    <input type="password" placeholder="Password..." />
-    
-    <div className={styles.separador}></div>
-
-    </>
+  </>
   )
 }
 export {Login}

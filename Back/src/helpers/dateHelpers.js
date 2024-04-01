@@ -22,5 +22,21 @@ function calculateAge(birthDate) {
   }
   return age;
 }
+function dateOneYear() {
+  // Obtener la fecha actual
+  const today = new Date();
 
-module.exports={ formatearFecha , calculateAge}
+  // Sumar un año a la fecha actual
+  const oneYearLater = new Date(today);
+  oneYearLater.setFullYear(today.getFullYear() + 1);
+
+  // Formatear la fecha en el formato dd-mm-yyyy
+  const day = String(oneYearLater.getDate()).padStart(2, '0');
+  const month = String(oneYearLater.getMonth() + 1).padStart(2, '0'); 
+  const year = oneYearLater.getFullYear();
+
+  // Retornar la fecha formateada
+  return `${day}-${month}-${year}`;
+}
+
+module.exports={ formatearFecha , calculateAge , dateOneYear}

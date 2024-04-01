@@ -5,6 +5,6 @@ const [insurances] = await sendQuery(`SELECT * FROM insurance WHERE userId = ?  
 if(!insurances) {
   return res.send("you dont have any insurances yet")
 }
-  res.send(insurances)
+  res.status(200).send(insurances)
 }
 module.exports= getInsurancesControler
