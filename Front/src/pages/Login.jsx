@@ -10,23 +10,30 @@ function Login () {
     mode:"onTouched"
   })
   const [errorMessage, setErrorMessage] = useState('')
-  const [loged, setloged] = useState('')
+  const [resp, setresp] = useState('')
+
 
   async function onLogin (data, event) {
     event.preventDefault()
     axios.post("http://localhost:3000/user/login" , data , {withCredentials:true})
-    .then(resp => {
-      console.log(resp)
-      setloged(true)
+    .then(response => {
+      setresp(response)
+      console.log(response)
     })
     .catch(error => {
+  
       if (error.response) {
-        setErrorMessage(error.response.data.error);
-      } else {
+
+
+       return setErrorMessage(error.response.data);
+      } 
+     
         
-        console.error('Error al enviar la solicitud:', error.message);
-      }
-      console.error(error.message)
+     
+       return console.error('Error al enviar la solicitud:', error.message);
+      
+    
+     
     })
       
   }
@@ -68,7 +75,9 @@ function Login () {
       <button>Login</button>
     </form>
           {errorMessage && <p>{errorMessage}</p>}
-          {loged && <p>You logged in !!</p>}
+
+          {resp && <p>{resp.data}</p>}
+
 
   </>
   )

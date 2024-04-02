@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt =require("jsonwebtoken")
 
 const sendQuery = require("../../db/initDb");
-const { SECRET } = require("../../../env");
+const  {SECRET } = require("../../../env");
 
 
 async function loginControler (req , res , next) {
@@ -18,20 +18,20 @@ async function loginControler (req , res , next) {
     SELECT * FROM users WHERE email = ?
     `, [email])
 
-  // comprobar que el verified = "yes"
-
+ // comprobamos si existe usuario con correo electrionico
+ 
+ if(!user) {
+      return res.status(500).send("no user is registered with this email")
+    }
+    
+    // comprobar que el verified = "yes"
   const [verified] = await sendQuery(`
     SELECT verified FROM users WHERE email = ?
     `, [email])
   
-  if (verified.verified === "no") {
+  if (verified?.verified === "no" || verified?.verified === undefined) {
   return res.status(403).send("you have to verify your account first")
   }
-
-  // comprobamos si existe usuario con correo electrionico
-if(!user) {
-  return res.status(500).send("no user is registered with this email")
-}
 
 // cmprobamos si la contraseña coincide
 

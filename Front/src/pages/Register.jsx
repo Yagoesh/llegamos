@@ -3,8 +3,12 @@ import {useForm} from "react-hook-form"
 import axios from "axios"
 import { convertDOB } from "../helper/dobHelper";
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 function Register() {
+
+  const [errorMessage, setErrorMessage] = useState('')
+  const [resp, setresp] = useState('')
   // aqui ...
   // inputs de name, surname, email , tel-numb , age , sex , password , repeat 
   const {register , handleSubmit , formState, watch } = useForm({
@@ -33,9 +37,9 @@ function Register() {
   return age >= 18;
 }
 
-let registered = true
 
-async function onSubmit (data, event) {
+
+async function onSubmit (data, event , reset) {
   event.preventDefault()
   const {name , surname , DOB , email , mobile , password} = data
   
@@ -44,15 +48,34 @@ async function onSubmit (data, event) {
   const dataToSend = {name , surname , dob , email , mobile , password}
  
   axios.post("http://localhost:3000/user/register" , dataToSend )
-  .then(data => {
-    console.log(data)
-    registered = true
+  .then(response => {
+    setresp(response)
+    console.log(response)
   })
-    .catch(error => console.log(error.message))
+  .catch(error => {
+    if (error.response) {
+     return setErrorMessage(error.response.data);
+    }
+     return console.error('Error al enviar la solicitud:', error.message);
+  })
+
+
+
+
+
+  // .then(data => {
+  //   console.log(data)
+
+  // })
+  //   .catch(error => console.log(error.message))
     
 
+
+
+
+
   
-    // reset()
+    reset()
   }
   
   
@@ -168,7 +191,12 @@ async function onSubmit (data, event) {
 
       <button>Register</button>
     </form>
-    { registered  ? < Outlet /> : <p>revisa datos </p>}
+    {errorMessage && <p>{errorMessage}</p>}
+
+{resp && <p>{resp.data}</p>}
+
+    {/* { resp  ? < Outlet /> : <p>revisa datos </p>} */}
+ 
     </>
   )
 }
