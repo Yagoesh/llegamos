@@ -1,14 +1,17 @@
 
 import './app.css'
-import { Headers } from './components/Headers'
-import { MisSeguros } from './pages/MisSeguros'
 import { Payments } from './pages/Payments'
-import { Calculate } from './pages/Calculate'
-import { Perfil } from './pages/Perfil'
 import {Routes , Route} from "react-router-dom"
+
 import { Register } from './pages/Register'
 import { Login } from './pages/Login'
 import { RegisterWelcome } from './pages/RegisterWelcome'
+import { MisSeguros } from './pages/MisSeguros'
+import { Headers } from './components/Headers'
+import { Calculate } from './pages/Calculate'
+import { Perfil } from './pages/Perfil'
+
+
 
 
 function App() {
@@ -16,13 +19,15 @@ function App() {
 
   return (
     <>
+ 
+
      <Headers />
      <Routes>
     
      <Route path="/login" element={< Login/>}/>
 
+    < Route path="/register/registerWelcome" element={< RegisterWelcome />}/>
      <Route path="/register" element={< Register/>}>
-      < Route path="/register/:regCode" element={< RegisterWelcome />}/>
      </Route>
       
 
@@ -32,6 +37,7 @@ function App() {
       <Route path="/calculate" element={< Calculate/>}/>
       <Route path="/perfil" element={< Perfil/>}/>
      </Routes>
+  
     </>
   )
 }

@@ -1,14 +1,12 @@
 input[type=tel]::-webkit-inner-spin-button,
     input[type=tel]::-webkit-outer-spin-button {
       -webkit-appearance: none; /* Oculta las flechas */
-
-   
-    
     }
 
 form div{
+
   display: flex;
-  
+  justify-content: center;
 }
 
 h1{
@@ -39,6 +37,23 @@ button {
   border-radius: 20%;
   cursor: pointer;
   text-decoration: none;
-  max-width: 10%;
+  max-width: 15%;
+  align-self: center;
+
+}
+
+.dob {
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+
+ 
+}
+
+button:hover {
+
+  color: white;
+  background-color: #ff8fab;
+
 
 }

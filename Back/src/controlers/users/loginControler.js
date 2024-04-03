@@ -54,7 +54,10 @@ const coockieConfig = {
   httpOnly: true
 }
 res.cookie("token" , token , coockieConfig )
-res.send("user logged-in")
+res.send({
+  message : `user ${user.name} is logged in`,
+  user:user
+})
 
 
 }

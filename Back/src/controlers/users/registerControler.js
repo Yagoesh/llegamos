@@ -48,7 +48,7 @@ VALUES ( ?, ?, ?, ?, ?, ? , ? )
 await sendEmail(result.data.email , "Verifica para registrarte" , `
 <h1>Bienvenidos a Seguros Llegamos</h1> 
 <p>gracias por registrarte, para verificar solo falta un ultimo paso haz click en el siguiente botón </p>
-<a href="http://localhost:5173/user/register/${regCode}">link</a>
+<a href="http://localhost:3000/user/register/${regCode}">link</a>
 `)
 res.status(200).send("registered")
 }

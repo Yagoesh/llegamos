@@ -2,16 +2,18 @@ import styles from "./register.module.css"
 import {useForm} from "react-hook-form"
 import axios from "axios"
 import { convertDOB } from "../helper/dobHelper";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+
 function Register() {
+  const navigate = useNavigate()
 
   const [errorMessage, setErrorMessage] = useState('')
   const [resp, setresp] = useState('')
   // aqui ...
   // inputs de name, surname, email , tel-numb , age , sex , password , repeat 
-  const {register , handleSubmit , formState, watch } = useForm({
+  const {register , handleSubmit , formState, watch, reset } = useForm({
     mode:"onTouched"
   })
 
@@ -39,60 +41,36 @@ function Register() {
 
 
 
-async function onSubmit (data, event , reset) {
+async function onSubmit (data, event ) {
   event.preventDefault()
-  const {name , surname , DOB , email , mobile , password} = data
+  try {
+    const {name , surname , DOB , email , mobile , password} = data
   
   const dob = convertDOB(DOB)
   
   const dataToSend = {name , surname , dob , email , mobile , password}
  
-  axios.post("http://localhost:3000/user/register" , dataToSend )
-  .then(response => {
-    setresp(response)
+  const response = axios.post("http://localhost:3000/user/register" , dataToSend )
+
+      setresp(response)
     console.log(response)
-  })
-  .catch(error => {
-    if (error.response) {
-     return setErrorMessage(error.response.data);
-    }
-     return console.error('Error al enviar la solicitud:', error.message);
-  })
-
-
-
-
-
-  // .then(data => {
-  //   console.log(data)
-
-  // })
-  //   .catch(error => console.log(error.message))
-    
-
-
-
-
-
   
-    reset()
+      navigate("/register/registerWelcome")
+    
+  }
+  catch(error) {
+    if (error.response) {
+      return setErrorMessage(error.response.data);
+    }
+    return console.error('Error al enviar la solicitud:', error.message);
+  }
+
+  reset()
+
   }
   
-  
   const {errors } = formState
-  
-  
-  
-  
-  // page de estamos esperando a que des click al link en tu correo
-  // finalmente mensaje de Bienvenid@
-  // navigate a Login
-  
-  
-  // en back ...
 
-  
-  
   return(
     <>
     <h1>Register</h1>
@@ -123,8 +101,8 @@ async function onSubmit (data, event , reset) {
         <p className={styles.erroresFormulario}>{errors.surname?.message}</p>
       </div>
 
-      <div>
-        Date of birth: 
+      <div className={styles.dob}>
+        Date of birth:
         <input type="date" name="DOB" defaultValue="" max={getCurrentDate()} {...register("DOB" , {
           required: 'date of birth required',
           validate: value => isDateValid(value) || 'Underage not allowed'
@@ -145,8 +123,6 @@ async function onSubmit (data, event , reset) {
         />
           <p className={styles.erroresFormulario}>{errors.email?.message}</p>
       </div>
-
-
 
       <div>
         <input name="mobile"
@@ -191,11 +167,13 @@ async function onSubmit (data, event , reset) {
 
       <button>Register</button>
     </form>
+
     {errorMessage && <p>{errorMessage}</p>}
 
-{resp && <p>{resp.data}</p>}
+    {resp && < Outlet/>}
 
-    {/* { resp  ? < Outlet /> : <p>revisa datos </p>} */}
+ 
+
  
     </>
   )

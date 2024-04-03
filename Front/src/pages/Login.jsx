@@ -2,10 +2,11 @@ import styles from "./register.module.css"
 import {useForm} from "react-hook-form"
 import axios from "axios"
 import { useState } from "react"
+import { createContext } from "react"
 
 
+const userContext = createContext()
 function Login () {
-
   const {register , handleSubmit , formState } = useForm({
     mode:"onTouched"
   })
@@ -76,10 +77,10 @@ function Login () {
     </form>
           {errorMessage && <p>{errorMessage}</p>}
 
-          {resp && <p>{resp.data}</p>}
+          {resp && <p>{resp.data.message}</p>}
 
 
   </>
   )
 }
-export {Login}
+export {Login , userContext}
