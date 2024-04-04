@@ -1,5 +1,5 @@
 import { createContext,  useState } from 'react';
-
+import PropTypes from "prop-types"
 
 const UserContext = createContext();
 
@@ -10,8 +10,10 @@ function UserProvider ({ children }) {
   });
 
   function logOut () {
-    setUser(null);
+    setUser(null); 
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    console.log("removeed")
   }
 
   function logIn (user, token) {
@@ -37,7 +39,9 @@ function UserProvider ({ children }) {
     </UserContext.Provider>
   );
 }
-
+UserProvider.propTypes = {
+  children: PropTypes.node
+}
 
 export default UserProvider;
 export { UserContext };

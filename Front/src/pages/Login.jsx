@@ -1,46 +1,55 @@
 import styles from "./register.module.css"
 import {useForm} from "react-hook-form"
 import axios from "axios"
-import { useState } from "react"
-import { createContext } from "react"
+import { useContext, useState } from "react"
+import { UserContext } from "../contexts/UserProvider"
+import { useNavigate } from "react-router-dom"
 
 
-const userContext = createContext()
+
 function Login () {
+  const navigate = useNavigate()
   const {register , handleSubmit , formState } = useForm({
     mode:"onTouched"
   })
   const [errorMessage, setErrorMessage] = useState('')
   const [resp, setresp] = useState('')
-
-
+  
+  const {logIn} = useContext(UserContext)
+  
   async function onLogin (data, event) {
     event.preventDefault()
-    axios.post("http://localhost:3000/user/login" , data , {withCredentials:true})
-    .then(response => {
+    try {
+      
+      const response  = await axios.post("http://localhost:3000/user/login" , data , {withCredentials:true})
+
+      const token = response.data.token
+      const user = response.data.user
+
+  
+      logIn(user , token)
+
+
       setresp(response)
-      console.log(response)
-    })
-    .catch(error => {
-  
-      if (error.response) {
-
-
-       return setErrorMessage(error.response.data);
-      } 
-     
+      navigate("/Calculate")
         
-     
-       return console.error('Error al enviar la solicitud:', error.message);
+      }
       
+      catch(error)  {
+        
+        if (error.response) {
+          
+          return setErrorMessage(error.response.data);
+        } 
+        
+        return console.error('Error al enviar la solicitud:', error.message);
+     
+      }
+      
+    }
     
-     
-    })
-      
-  }
-  
-  // navigate a mis seguros o Mis presupuestos 
-  const {errors } = formState
+    // navigate a mis seguros o Mis presupuestos 
+    const {errors } = formState
 
   return(
 
@@ -77,10 +86,9 @@ function Login () {
     </form>
           {errorMessage && <p>{errorMessage}</p>}
 
-          {resp && <p>{resp.data.message}</p>}
 
 
   </>
   )
 }
-export {Login , userContext}
+export {Login }

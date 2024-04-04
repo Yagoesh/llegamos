@@ -4,8 +4,9 @@ input[type=tel]::-webkit-inner-spin-button,
     }
 
 form div{
-
+  align-self: center;
   display: flex;
+
   justify-content: center;
 }
 
@@ -16,19 +17,16 @@ h1{
 form{
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 
 
 }
-.separador{
-  max-width: 50%;
-  min-height: 1rem;
-  background-color: #ffe5ec;
-}
+
 
 .erroresFormulario {
   color: rgb(218, 93, 93);
   font-size: 50%;
-  align-self: center;
+  position: absolute;
 }
 button {
   border: none;

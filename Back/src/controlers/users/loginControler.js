@@ -56,7 +56,8 @@ const coockieConfig = {
 res.cookie("token" , token , coockieConfig )
 res.send({
   message : `user ${user.name} is logged in`,
-  user:user
+  user:user,
+  token : token
 })
 
 

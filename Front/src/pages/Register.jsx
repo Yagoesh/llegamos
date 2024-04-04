@@ -110,7 +110,6 @@ async function onSubmit (data, event ) {
         <p className={styles.erroresFormulario}>{errors.DOB?.message}</p>
       </div>
 
-      <div className={styles.separador}></div>
 
       <div>
         <input name="email"
