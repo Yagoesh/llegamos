@@ -8,6 +8,7 @@ function UserProvider ({ children }) {
     const user = JSON.parse(localStorage.getItem('user'));
     return user;
   });
+  const [budged , setBudged] = useState()
 
   function logOut () {
     setUser(null); 
@@ -22,15 +23,12 @@ function UserProvider ({ children }) {
     localStorage.setItem('token', token);
   }
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   setUser(user);
-  // }, []);
-
   const contextValues = {
     user,
     logOut,
-    logIn
+    logIn,
+    budged,
+    setBudged
   };
 
   return (

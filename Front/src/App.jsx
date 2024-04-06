@@ -15,6 +15,7 @@ import { PrivateRoutes } from './components/PrivateRoutes'
 import { PublicRoutes } from './components/PublicRoutes'
 import { Home } from './pages/Home'
 import { Footer } from './components/Footer'
+import { Price } from './pages/Price'
 
 
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/Payments" element={< Payments/>}/>
         <Route path="/calculate" element={< Calculate/>}/>
         <Route path="/perfil" element={< Perfil/>}/>
+        <Route path="/price" element={< Price/>}/>
       </Route>
     </Routes>
   </body>

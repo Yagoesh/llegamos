@@ -20,6 +20,7 @@ async function calculateControler (req, res ) {
   ` , [typeId])
   const {typeRisk} = insuranceTypeRisk
 
+
 const price = calculations(typeRisk , max_power_hp , cityRiskIndex )
 
 await sendQuery(` INSERT INTO calculate (userId , carId , typeId , price ) VALUES ( ? , ? , ? , ?)`, [userId , carId , typeId , price])

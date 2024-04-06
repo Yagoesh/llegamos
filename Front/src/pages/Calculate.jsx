@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios"
 import styles from "./register.module.css"
+import { Navigate } from "react-router-dom";
+import { UserContext } from "../contexts/UserProvider";
 
 
 function Calculate () {
+ const {setBudged} = useContext(UserContext)
+
   const [options, setOptions] = useState([]);
   const [modelOptions, setModelOptions] = useState([]);
   const [cityOptions, setCityOptions] = useState([]);
   const [loading, setLoading] = useState(true)
+  const [calculationDone, setCalculationDone] = useState(false)
+
   // * PARA VER PRESUS
   // conseguir token
   // ver si tiene presupuestos
@@ -22,6 +28,8 @@ function Calculate () {
   const [selectedModel, setSelectedModel] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+
+
   function handleChangeBrand (event)  {
   setSelectedBrand(event.target.value);
   }
@@ -39,10 +47,17 @@ function Calculate () {
 
   }
   
-  function handleCalculate (event) {
+  async function handleCalculate (event) {
   event.preventDefault()
-    // * NOS QUEDAMOS AQUI
-    console.log(event)
+  const dataToSend = {
+    carId : selectedModel, 
+    typeId : selectedType, 
+    city:selectedCity
+  }  
+  const price = await axios.post("http://localhost:3000/calculate" , dataToSend , {withCredentials:true} )
+  console.log(price)
+  setBudged(price)
+  // setCalculationDone(true)
   }
 
   useEffect(() => {
@@ -59,6 +74,7 @@ function Calculate () {
       .catch(error => {
         console.error('Couldnt get data from API', error);
         setLoading(false);
+        setCalculationDone(false)
       });
   }, [])
 
@@ -117,8 +133,8 @@ function Calculate () {
           <option value={""}>
             Select a model...
           </option>
-            {modelOptions.map((option , index ) => (
-              <option key={index} value={option.model_name}>
+            {modelOptions.map((option  ) => (
+              <option key={option.carId} value={option.carId}>
                 {option.model_name}
               </option>
             ))}
@@ -159,7 +175,7 @@ function Calculate () {
 
 
         <button >Calculate</button>
-
+        {calculationDone && <Navigate to="/price" />}
 
 
       </form>
