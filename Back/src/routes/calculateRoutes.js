@@ -7,9 +7,11 @@ const getCalculatesControler = require('../controlers/calculate/getCalculatesCon
 const getCalculateControler = require('../controlers/calculate/getCalculateControler.js');
 const getCars = require('../controlers/calculate/getCars.js');
 const getModels = require('../controlers/calculate/getModels.js');
+const getCities = require('../controlers/calculate/getCities.js');
 
 calculateRouter.get("/cars" , getUserByCookies , getCars)
-calculateRouter.get("/models" , getUserByCookies, getModels)
+calculateRouter.get("/models/:brand" , getUserByCookies, getModels)
+calculateRouter.get("/cities" , getUserByCookies , getCities)
 
 
 calculateRouter.get("/:calculateId" , getUserByCookies , getCalculateControler)

@@ -9,8 +9,11 @@ form div{
 
   justify-content: center;
 }
+select {
+  min-width: 260px;
+}
 
-h1{
+h2{
   color: #7F7F7F;
 }
 
@@ -18,11 +21,15 @@ form{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-
+  min-height: 50vh;
 
 }
 
-
+.separador {
+  background-color: #FFC2D1;
+  min-height: 1rem;
+  min-width: 50%;
+}
 .erroresFormulario {
   color: rgb(218, 93, 93);
   font-size: 50%;

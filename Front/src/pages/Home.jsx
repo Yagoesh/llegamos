@@ -1,6 +1,8 @@
+import styles from "./register.module.css"
+
 function Home () {
   return(<>
-    Home
+    <h2>Home</h2>
   </>
   )
 }
