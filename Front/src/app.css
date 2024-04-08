@@ -4,4 +4,6 @@ gap: 0;box-sizing: border-box;
 }
 body {
   min-height: 70vh;
+  max-width: 80% ;
+  margin: auto;
 }

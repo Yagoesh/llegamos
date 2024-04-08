@@ -8,6 +8,7 @@ function UserProvider ({ children }) {
     const user = JSON.parse(localStorage.getItem('user'));
     return user;
   });
+  
   const [budged , setBudged] = useState()
 
   function logOut () {

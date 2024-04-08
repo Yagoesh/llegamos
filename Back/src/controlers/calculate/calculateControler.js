@@ -1,5 +1,7 @@
 const sendQuery = require("../../db/initDb.js")
 const calculations = require("../../helpers/calculateInsurance.js")
+const crypto = require('crypto');
+
 
 async function calculateControler (req, res ) {
   const {carId , typeId, city} = req.body
@@ -20,13 +22,15 @@ async function calculateControler (req, res ) {
   ` , [typeId])
   const {typeRisk} = insuranceTypeRisk
 
+  const calculateId = crypto.randomUUID();
+
 
 const price = calculations(typeRisk , max_power_hp , cityRiskIndex )
 
-await sendQuery(` INSERT INTO calculate (userId , carId , typeId , price ) VALUES ( ? , ? , ? , ?)`, [userId , carId , typeId , price])
+await sendQuery(` INSERT INTO calculate (calculateId , userId , carId , typeId , price ) VALUES ( ? , ? , ? , ? , ?)`, [calculateId , userId , carId , typeId , price])
 
 
-res.status(200).send(JSON.stringify(price))
+res.status(200).send(JSON.stringify(calculateId))
 }
 module.exports = calculateControler
 

@@ -12,7 +12,8 @@ function Calculate () {
   const [modelOptions, setModelOptions] = useState([]);
   const [cityOptions, setCityOptions] = useState([]);
   const [loading, setLoading] = useState(true)
-  const [calculationDone, setCalculationDone] = useState(false)
+  const [calculationDone , setCalculationDone] = useState(false)
+
 
   // * PARA VER PRESUS
   // conseguir token
@@ -54,27 +55,27 @@ function Calculate () {
     typeId : selectedType, 
     city:selectedCity
   }  
-  const price = await axios.post("http://localhost:3000/calculate" , dataToSend , {withCredentials:true} )
-  console.log(price)
-  setBudged(price)
-  // setCalculationDone(true)
+  const calculateId = await axios.post("http://localhost:3000/calculate" , dataToSend , {withCredentials:true} )
+
+  setBudged(calculateId.data)
+  setCalculationDone(true)
   }
 
   useEffect(() => {
+    setCalculationDone(false)
 
     axios.get("http://localhost:3000/calculate/cars" , {withCredentials:true})
       .then(response => {
  
         const data = response.data;
-      
-    
+   
         setOptions(data);
         setLoading(false);
       })
       .catch(error => {
-        console.error('Couldnt get data from API', error);
+        console.error('Couldnt get data from API', error.message);
         setLoading(false);
-        setCalculationDone(false)
+
       });
   }, [])
 
@@ -96,10 +97,7 @@ function Calculate () {
     setLoading(true)
     axios.get("http://localhost:3000/calculate/cities" , {withCredentials:true})
       .then(response => {
- 
         const data = response.data;
-      
-    
         setCityOptions(data);
         setLoading(false);
       })

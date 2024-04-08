@@ -8,8 +8,10 @@ const getCalculateControler = require('../controlers/calculate/getCalculateContr
 const getCars = require('../controlers/calculate/getCars.js');
 const getModels = require('../controlers/calculate/getModels.js');
 const getCities = require('../controlers/calculate/getCities.js');
+const getDetailsById = require('../controlers/calculate/getDetailsById.js');
 
 calculateRouter.get("/cars" , getUserByCookies , getCars)
+calculateRouter.get("/cars/:carId" , getUserByCookies , getDetailsById)
 calculateRouter.get("/models/:brand" , getUserByCookies, getModels)
 calculateRouter.get("/cities" , getUserByCookies , getCities)
 
