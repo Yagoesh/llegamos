@@ -56,11 +56,14 @@ const insurance = getTypeFromId(calculated.typeId)
       <div>
         <h3> For only : {calculated.price}</h3>
       </div>
-  
-    
+
+
       <form >
         <div><input type="text" placeholder="Number plate ..."/></div>
-        <button>Start my insurance NOW!</button>
+      <div className={styles.multipleButtons}>
+        <button className="inline">Back</button>
+          <button>Buy</button>
+      </div>
       </form>
    
     </div>

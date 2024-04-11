@@ -30,26 +30,22 @@ function Calculate () {
   const [selectedType, setSelectedType] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
 
-
   function handleChangeBrand (event)  {
-  setSelectedBrand(event.target.value);
+    setSelectedBrand(event.target.value);
   }
-
   function handleChangeModel (event)  {
     setSelectedModel(event.target.value);
   }
-
   function  handleChangeType (event) {
     setSelectedType(event.target.value);
-
   }  
   function  handleChangeCity (event) {
     setSelectedCity(event.target.value);
-
   }
   
   async function handleCalculate (event) {
   event.preventDefault()
+  
   const dataToSend = {
     carId : selectedModel, 
     typeId : selectedType, 
@@ -114,7 +110,7 @@ function Calculate () {
       <form onSubmit={handleCalculate}>
         
         <div>
-          <select onChange={handleChangeBrand}>
+          <select name="brand" onChange={handleChangeBrand}>
           <option value={""}>
             Select a brand...
           </option>
@@ -127,7 +123,7 @@ function Calculate () {
         </div>
 
         <div>
-          <select onChange={handleChangeModel}>
+          <select name="model" onChange={handleChangeModel}>
           <option value={""}>
             Select a model...
           </option>
@@ -142,7 +138,7 @@ function Calculate () {
         <div className={styles.separador}></div>
 
         <div>
-          <select onChange={handleChangeType}>
+          <select name="type" onChange={handleChangeType}>
           <option value={""}>
             Select a type of insurance...
           </option>
@@ -157,7 +153,7 @@ function Calculate () {
         <div className={styles.separador}></div>
 
         <div>
-          <select onChange={handleChangeCity}>
+          <select name="city" onChange={handleChangeCity}>
           <option value={""}>
             Select city ...
           </option>
